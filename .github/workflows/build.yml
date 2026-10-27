@@ -1,0 +1,30 @@
+name: Build
+
+on: workflow_dispatch
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Image Builder dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential libncurses-dev zlib1g-dev gawk gettext libssl-dev xsltproc rsync wget unzip python3 zstd file
+
+      - name: Build firmware
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: ./build.sh
+
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tag="$(cat out/version)-${{ github.run_number }}"
+          gh release create "$tag" out/*-squashfs-sysupgrade.bin out/*.manifest out/sha256sums \
+            --title "$tag" --notes-file out/notes.md
