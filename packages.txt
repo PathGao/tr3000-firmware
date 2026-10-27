@@ -1,8 +1,9 @@
-# 官方源的包，依赖由 Image Builder 自动补。第三方包见 build.sh。
-luci
+# 官方源的包，只写要的功能和它的中文包；被它们带进来的依赖不写，由 Image Builder 自动补。
+# 第三方包见 build.sh。
+
+# 官方固件自带 LuCI 和 HTTPS，Image Builder 默认不带
 luci-ssl
 luci-i18n-base-zh-cn
-luci-app-package-manager
 luci-app-filemanager
 luci-i18n-filemanager-zh-cn
 luci-app-statistics
@@ -16,17 +17,13 @@ kmod-fs-vfat
 luci-app-samba4
 luci-i18n-samba4-zh-cn
 
-# 透明代理
+# 透明代理：PassWall2 的预编译包不会自动带上这些
 -dnsmasq
 dnsmasq-full
 xray-core
-v2ray-geoip
-v2ray-geosite
 kmod-nft-socket
 kmod-nft-tproxy
-kmod-nft-nat
 
 # 性能
 irqbalance
 kmod-tcp-bbr
-unzip

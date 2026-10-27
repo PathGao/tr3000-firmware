@@ -51,7 +51,8 @@ fetch "$argon" '^luci-(theme-argon|app-argon-config|i18n-argon-config-zh-cn)-[0-
 cp "$work"/extra/*.apk "$ibdir/packages/"
 
 packages="$(grep -Ev '^\s*(#|$)' packages.txt | xargs)"
-packages+=" luci-app-passwall2 luci-i18n-passwall2-zh-cn geoview tcping"
+# geoview、tcping 是 PassWall2 的依赖，会自动带上
+packages+=" luci-app-passwall2 luci-i18n-passwall2-zh-cn"
 packages+=" luci-theme-argon luci-app-argon-config luci-i18n-argon-config-zh-cn"
 
 make -C "$ibdir" image PROFILE="$PROFILE" PACKAGES="$packages" BIN_DIR="$out"
